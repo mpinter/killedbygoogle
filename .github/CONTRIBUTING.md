@@ -11,4 +11,5 @@
 If you are altering anything other than `graveyard.json`, you should ensure that your Pull Request will pass continuous integration. Run `yarn test`.
 
 ### Continuous Integration
+
 Every PR must pass CI checks before it can be updated or merged into `master`.

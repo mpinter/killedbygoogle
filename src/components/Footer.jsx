@@ -43,7 +43,7 @@ const TombstoneStyle = {
 
 const Title = styled.div`
   font-size: 2.5em;
-  color: #FAFAFA;
+  color: #fafafa;
   font-weight: lighter;
 `;
 
@@ -66,37 +66,29 @@ const SocialWrapper = styled.div`
 
 export default () => (
   <>
-    <PressCoverage />
     <FooterContainer>
       <FlexWrap>
         <FooterTitle>
           <img style={TombstoneStyle} src={Tombstone} alt="Tombstone" />
-          <Title>Killed by Google</Title>
+          <Title>Dead Company Names</Title>
         </FooterTitle>
         <div>
           <p>
-            Killed by Google is the Google graveyard; a free and open source list of discontinued
-            Google services, products, devices, and apps. We aim to be a  source of
-            factual information about the history surrounding Google&apos;s dead projects.
-          </p>
-          <p>
-            <a href="https://github.com/codyogden/killedbygoogle/graphs/contributors" target="_blank" rel="noopener noreferrer">Contributors</a>
-            &nbsp;from around the world help compile, research, and maintain the information about
-            dying and dead Google products. You can join the discussion on&nbsp;
-            <a href="https://github.com/codyogden/killedbygoogle">GitHub</a>
-            , or follow
-            us on&nbsp;
-            <a href="https://twitter.com/killedbygoogle">Twitter</a>
-            . A project by&nbsp;
-            <a href="https://codyogden.com" target="_blank" rel="noopener noreferrer">Cody Ogden</a>
-            .
+            List of all the names and apps we've been through. Forked off Killed By Google (awesome
+            stuff, check them out).
           </p>
         </div>
         <CopyNotice>
-          <a href="https://github.com/codyogden/killedbygoogle/blob/master/LICENSE">&copy; 2019 Cody Ogden.</a>
+          <a href="https://github.com/codyogden/killedbygoogle/blob/master/LICENSE">
+            &copy; 2019 Cody Ogden.
+          </a>
         </CopyNotice>
         <SocialWrapper>
-          <SocialLink url="https://github.com/codyogden/killedbygoogle" altText="GitHub" imgSrc={GITHUB} />
+          <SocialLink
+            url="https://github.com/codyogden/killedbygoogle"
+            altText="GitHub"
+            imgSrc={GITHUB}
+          />
           <SocialLink url="https://twitter.com/killedbygoogle" altText="Twitter" imgSrc={TWITTER} />
         </SocialWrapper>
       </FlexWrap>

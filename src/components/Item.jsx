@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format, formatDistance, parseISO } from 'date-fns';
 
 import Tombstone from '../assets/tombstone.svg';
-import Guillotine from '../assets/guillotine.svg';
+import Knife from '../assets/knife.svg';
 
 // Import Styled Components
 import {
@@ -32,14 +32,18 @@ const eolIdiom = () => {
 
 export default class Item extends Component {
   getIcon() {
-    return (this.isPast()) ? <Icon src={Tombstone} alt="Tombstone" /> : <Icon src={Guillotine} alt="Guillotine" />;
+    return this.isPast() ? (
+      <Icon src={Tombstone} alt="Tombstone" />
+    ) : (
+      <Icon src={Knife} alt="Knife" />
+    );
   }
 
   getYears() {
     const { dateClose, dateOpen } = this.props;
     const duration = formatDistance(parseISO(dateClose), parseISO(dateOpen));
 
-    return (` It was ${duration} old.`);
+    return this.isPast() ? ` It was ${duration} old.` : '';
   }
 
   isPast() {
@@ -55,23 +59,11 @@ export default class Item extends Component {
 
     if (!this.isPast()) {
       if (new Date(dateClose) < yearFromNow) {
-        return (
-          <span>
-            {`${eolIdiom()} in ${relativeDate}, `}
-          </span>
-        );
+        return <span>{`${eolIdiom()} in ${relativeDate}, `}</span>;
       }
-      return (
-        <span>
-          {`${eolIdiom()} in ${exactDate}, `}
-        </span>
-      );
+      return <span />;
     }
-    return (
-      <span>
-        {`Killed ${relativeDate} ago, `}
-      </span>
-    );
+    return <span>{`Killed ${relativeDate} ago, `}</span>;
   }
 
   ageRange(grave) {
@@ -79,9 +71,9 @@ export default class Item extends Component {
       const date = new Date(grave.dateClose);
       return (
         <AgeRange>
-          {date.toLocaleDateString('en-US', { month: 'long' })}
+          Alive
           <br />
-          {date.toLocaleDateString('en-US', { year: 'numeric' })}
+          ...for now!
         </AgeRange>
       );
     }
@@ -103,7 +95,11 @@ export default class Item extends Component {
           {this.ageRange(grave)}
         </IconContainer>
         <ContentContainer>
-          <h2><a href={grave.link} target="_blank" rel="noopener noreferrer">{grave.name}</a></h2>
+          <h2>
+            <a href={grave.link} target="_blank" rel="noopener noreferrer">
+              {grave.name}
+            </a>
+          </h2>
           <Description>
             {this.timePhrase()}
             {grave.description}

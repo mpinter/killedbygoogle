@@ -30,22 +30,28 @@ export default class App extends Component {
   }
 
   setFilter(val) {
-    this.setState({
-      activeFilter: val,
-    }, this.search);
+    this.setState(
+      {
+        activeFilter: val,
+      },
+      this.search,
+    );
   }
 
   searchFilter(term) {
-    this.setState({
-      term,
-    }, this.search);
+    this.setState(
+      {
+        term,
+      },
+      this.search,
+    );
   }
 
   search() {
     const { fullList, activeFilter, term } = this.state;
     const regexp = new RegExp(term.toLowerCase(), 'i');
     // If a filter is active, only search through those results
-    const list = (activeFilter) ? fullList.filter(el => el.type === activeFilter) : fullList;
+    const list = activeFilter ? fullList.filter(el => el.type === activeFilter) : fullList;
     // If search goes empty
     if (term === '') {
       // Reset the list.
@@ -55,33 +61,19 @@ export default class App extends Component {
     } else {
       // Otherwise filter the list by name and description
       this.setState({
-        listOfItems: list.filter(el => (
-          regexp.test(el.name.toLowerCase())
-          || regexp.test(el.description.toLowerCase())
-        )),
+        listOfItems: list.filter(
+          el => regexp.test(el.name.toLowerCase()) || regexp.test(el.description.toLowerCase()),
+        ),
       });
     }
   }
 
-
   render() {
     const {
-      listOfItems,
-      activeFilter,
-      term,
-      fullList,
+      listOfItems, activeFilter, term, fullList,
     } = this.state;
     return (
       <div>
-        <BannerMessage>
-          <a href="https://github.com/codyogden/killedbygoogle/issues">
-            {'Open Source.'}
-          </a>
-          &nbsp;-&nbsp;
-          <a href="https://twitter.com/killedbygoogle">
-            {'Find us on Twitter.'}
-          </a>
-        </BannerMessage>
         <Header />
         <Search search={this.searchFilter} term={term} />
         <Filter current={activeFilter} filterHandler={this.setFilter} items={fullList} />
@@ -97,21 +89,21 @@ App.propTypes = {
 };
 
 // Retrieve static json
-fetch('graveyard.json')
-  .then((response) => {
-    // Process it
-    response.json().then((data) => {
-      // Sort by the dateClose (date discontinued)
-      const graveyard = data.sort((a, b) => new Date(b.dateClose) - new Date(a.dateClose));
-      // Render the app
-      render(<App data={graveyard} />, document.querySelector('#killedbygoogle'));
-    });
+fetch('graveyard.json').then((response) => {
+  // Process it
+  response.json().then((data) => {
+    // Sort by the dateClose (date discontinued)
+    const graveyard = data.sort((a, b) => new Date(b.dateClose) - new Date(a.dateClose));
+    // Render the app
+    render(<App data={graveyard} />, document.querySelector('#killedbygoogle'));
   });
+});
 
 if ('serviceWorker' in navigator) {
   const { error } = console;
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+    navigator.serviceWorker
+      .register('./service-worker.js', { scope: './' })
       .catch(err => error('Service worker registration failed: ', err));
   });
 }
